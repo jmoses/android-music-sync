@@ -2,6 +2,17 @@
 
 require 'appscript'
 require 'fileutils'
+require 'trollop'
+
+opts = Trollop::options do 
+  opt :source, "Where your iTunes base is.  Used only for path cleaning", :default => "~/Music/iTunes/iTunes Media/Music/"
+  opt :dest, "Where to put the music", :type => :string
+  opt :playlists, "Which playlists to sync", :type => :strings
+end
+
+Trollop::die("Source is required") if opts[:source] = ''
+Trollop::die("Dest it required") if opts[:dest] = ''
+Trollop::die("Playlists are required, at least one") if options[:playlists] = nil
 
 app = Appscript.app('iTunes')
 
